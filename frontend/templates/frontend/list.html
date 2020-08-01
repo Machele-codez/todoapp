@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>TODO | RESTFUL</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+      
+    <style type="text/css">
+      body {
+        background: rgb(63, 232, 224);
+      }
+      
+      .wrapper {
+        background: white;
+        margin: 3rem auto;
+        width: 80%;
+        box-shadow: .1rem .1rem .5rem .2rem grey;
+      }
+      
+      .form-container {
+        text-align: center;
+        padding: 1.5rem;
+        box-shadow: 0rem .1rem .1rem .1rem grey;
+      }
+      
+      .form-container form {
+        display: flex;
+      }
+      
+      input {
+        width: 80%;
+      }
+      
+      #list-container {
+        padding: .5rem;
+      }
+      
+      .flex-wrapper {
+        display: flex;
+        align-items: center;
+        width: 100%;
+      }
+      
+      .flex-wrapper div {
+        margin: .5rem;
+      }
+      
+      li {
+        list-style: none;
+      }
+    </style>
+    
+  </head>
+  
+  <body>
+    <div class="container">
+      <div class="wrapper">
+        <div class="form-container">
+          <form method="post" accept-charset="utf-8">
+            <input type="text" name="title" id="title" placeholder="Add Task Here" />
+            <button class="btn btn-md btn-primary add-task" type="submit">submit</button>
+          </form>
+        </div>
+        
+        <div id="list-container">
+          
+        </div>
+      </div>
+    </div>
+    
+    <script type="text/javascript">
+      function buildList(){
+        const url = "/api/tasks/";
+        const listContainer = document.getElementById('list-container');
+        
+        fetch(url)
+        .then(resp => resp.json())
+        .then(data => {
+        console.log("Data:", data);
+        
+        var list = data;
+          for (var i in list){
+            var content = `
+            <div id="data-row-${i}" class=flex-wrapper>
+              <div style="flex:7">
+                <span class="title">${list[i].title}</span>
+              </div>
+              <div style="flex:1">
+                <button class="btn btn-sm btn-outline-info">Edit</button>
+              </div>
+              <div style="flex:1">
+                <button class="btn btn-sm btn-outline-dark">-</div>
+            </div>
+            `;
+            listContainer.innerHTML += content; 
+          }
+          
+        });
+        
+      }
+      
+      buildList();
+      /*
+      function build(){
+        const url = "https://f3470ede3032.ngrok.io/api/tasks/";
+        
+        return fetch(url)
+        .then(resp => resp.json())
+        .then(data => {
+          document.write("https");
+          document.write(data);
+        });
+        return "finished";
+      }
+      
+      build();
+      
+      function Demo(){
+        const url = "http://127.0.0.1:8000/api/tasks/";
+        
+        fetch(url)
+        .then(res => res.json())
+        .then(data => {
+          document.write("localhost");
+          document.write(data);
+        });
+        
+      }
+      Demo();
+      */
+    </script>
+    <button onclick="Demo()">List</button>
+  </body>
+</html>
